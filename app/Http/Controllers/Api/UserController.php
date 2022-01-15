@@ -37,7 +37,7 @@ class UserController extends Controller
             $validator = Validator::make($request->all(), [
                 'nombre' => 'required|string|max:255',
                 'email' => ['required', 'email', 'max:255', Rule::unique('users')],
-                'password' => ['required', 'string', 'max:255'],
+                'password' => ['required', 'string', 'max:255', 'confirmed'],
                 'edad' => ['required', 'integer', 'max:255'],
                 'fecha_nacimiento' => ['required', 'date', 'max:255'],
                 'sexo' => ['required', 'string', 'max:255', 'in:hombre,mujer'],
@@ -50,6 +50,10 @@ class UserController extends Controller
             if ($validator->fails()) {
                 return response()->json($validator->errors()->all());
             }
+
+            $request->merge([
+                'password' => bcrypt($request->password)
+            ]);
             
             $user = User::create($request->all());
 
@@ -109,6 +113,9 @@ class UserController extends Controller
     {
         try {
             $user = User::findOrFail($id);
+            $request->merge([
+                'password' => bcrypt($request->password)
+            ]);
             $user->update($request->all());
 
             return response()->json([
