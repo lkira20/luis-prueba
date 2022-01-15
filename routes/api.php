@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\ProductoController;
+use App\Http\Controllers\Api\RolesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,6 +27,13 @@ Route::group([
 
     Route::apiResource('/user', UserController::class);
     Route::apiResource('/producto', ProductoController::class);
+
+    Route::post('/asignarRole', [RolesController::class, 'asignarRole']);
+    Route::post('/removerRole', [RolesController::class, 'removerRole']);
+    Route::post('/asignarPermiso', [RolesController::class, 'asignarPermiso']);
+    Route::post('/removerPermiso', [RolesController::class, 'removerPermiso']);
+    Route::get('/checkRole', [RolesController::class, 'checkRole']);
+    Route::get('/checkPermisos', [RolesController::class, 'checkPermisos']);
 });
 
 Route::group([

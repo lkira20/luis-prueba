@@ -11,6 +11,14 @@ use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['role:admin','permission:user.index'])->only('index');
+        $this->middleware(['role:admin','permission:user.create'])->only('store');
+        $this->middleware(['role:admin','permission:user.edit'])->only('update');
+        $this->middleware(['role:admin','permission:user.delete'])->only('destroy');
+        $this->middleware(['role:admin','permission:user.show'])->only('show');
+    }
     /**
      * Display a listing of the resource.
      *
