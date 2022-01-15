@@ -24,7 +24,7 @@ class CreateUsersTable extends Migration
             $table->integer('dni')->unique();
             $table->string('direccion');
             $table->string('pais');
-            $table->integer('telefono');
+            $table->string('telefono');
             $table->rememberToken();
             $table->timestamps();
         });
